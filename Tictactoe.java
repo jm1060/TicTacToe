@@ -20,6 +20,8 @@ public class Tictactoe
     public static void tictactoegame(char[][]tictactoe)
     {
         Scanner scanner = new Scanner(System.in);
+        int maxturns = tictactoe.length * tictactoe[0].length;
+        int currentturn = 0;
         System.out.println("Please enter your coordinates");
         int user_coord1;
         int user_coord2;
@@ -36,7 +38,14 @@ public class Tictactoe
             user_coord2 = scanner.nextInt();
         }
         tictactoe[user_coord1][user_coord2] = 'O';
-
+        currentturn +=1;
+        if(maxturns % 2 == 1)
+        {
+            if(currentturn == maxturns)
+            {
+                
+            }
+        }
         Random rand = new Random();
         System.out.println("Computer's turn");
         int computer_coord1 = rand.nextInt(3);
@@ -56,6 +65,50 @@ public class Tictactoe
             System.out.println("\n");
         }
 
-    }   
-   
+    }  
+    private static boolean checkwins(char[][]tictactoe)
+    {
+        return true;
+    }
+    private static boolean checkhorizontaluserwinner(char[][]tictactoe)
+    {
+        boolean horizontaluserwin = false;
+        
+        for(int i = 0; i < tictactoe.length; i++)
+        {
+            for(int j = 0; j < tictactoe[0].length; j++)
+            {
+                if(tictactoe[i][j]=='X')
+                {
+                    horizontaluserwin = true;
+                }
+                else
+                {
+                    horizontaluserwin = false;
+                    break;
+                }
+            }
+        }
+        return horizontaluserwin;
+    }
+    private static boolean checkhorizontalCPUwinner(char[][]tictactoe)
+    {
+        boolean horizontalCPUwin = false;
+        for(int i = 0; i < tictactoe.length; i++)
+        {
+            for(int j = 0; j < tictactoe[0].length; j++)
+            {
+                if(tictactoe[i][j]=='O')
+                {
+                    horizontalCPUwin = true;
+                }
+                else
+                {
+                    horizontalCPUwin = false;
+                    break;
+                }
+            }
+        }
+        return horizontalCPUwin;
+    }
 }
