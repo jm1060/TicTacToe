@@ -78,7 +78,7 @@ public class Tictactoe
         {
             for(int j = 0; j < tictactoe[0].length; j++)
             {
-                if(tictactoe[i][j]=='X')
+                if(tictactoe[i][j]=='O')
                 {
                     horizontaluserwin = true;
                 }
@@ -98,7 +98,7 @@ public class Tictactoe
         {
             for(int j = 0; j < tictactoe[0].length; j++)
             {
-                if(tictactoe[i][j]=='O')
+                if(tictactoe[i][j]=='X')
                 {
                     horizontalCPUwin = true;
                 }
@@ -110,5 +110,45 @@ public class Tictactoe
             }
         }
         return horizontalCPUwin;
+    }
+    private static boolean checkverticaluserwinner(char[][]tictactoe)
+    {
+        boolean verticaluserwin = false;
+        for(int i = 0; i < tictactoe.length; i++)
+        {
+            for(int j = 0; j < tictactoe[0].length; j++)
+            {
+                if(tictactoe[j][i]=='O')
+                {
+                    verticaluserwin = true;
+                }
+                else
+                {
+                    verticaluserwin = false;
+                    break;
+                }
+            }
+        }
+        return verticaluserwin;
+    }
+    private static boolean checkverticalCPUwinner(char[][]tictactoe)
+    {
+        boolean verticalcpuwin = false;
+        for(int i = 0; i < tictactoe.length; i++)
+        {
+            for(int j = 0; j < tictactoe[0].length; j++)
+            {
+                if(tictactoe[j][i]=='X')
+                {
+                    verticalcpuwin = true;
+                }
+                else
+                {
+                    verticalcpuwin = false;
+                    break;
+                }
+            }
+        }
+        return verticalcpuwin;
     }
 }
