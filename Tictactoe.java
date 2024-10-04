@@ -88,6 +88,10 @@ public class Tictactoe
                     break;
                 }
             }
+            if(horizontaluserwin == true)
+            {
+                break;
+            }
         }
         return horizontaluserwin;
     }
@@ -107,6 +111,10 @@ public class Tictactoe
                     horizontalCPUwin = false;
                     break;
                 }
+            }
+            if(horizontalCPUwin == true)
+            {
+                break;
             }
         }
         return horizontalCPUwin;
@@ -128,6 +136,10 @@ public class Tictactoe
                     break;
                 }
             }
+            if(verticaluserwin == true)
+            {
+                break;
+            }
         }
         return verticaluserwin;
     }
@@ -148,7 +160,75 @@ public class Tictactoe
                     break;
                 }
             }
+            if(verticalcpuwin == true)
+            {
+                break;
+            }
         }
         return verticalcpuwin;
     }
+    private static boolean diagnolsuserwinner(char[][]tictactoe)
+    {
+        boolean diagnolsuserwin = false;
+        boolean diagnolsuserfirst = false;
+        boolean diagnolsusersecond = false;
+        for(int i = 0; i < tictactoe.length; i++)
+        {
+            if(tictactoe[i][i]=='O')
+            {
+                diagnolsuserfirst = true;
+            }
+            else{
+                diagnolsuserfirst = false;
+                break;
+            }
+        }
+        for(int j = 0; j < tictactoe.length; j++)
+        {
+            if(tictactoe[j][tictactoe[j].length-1-j]=='O')
+            {
+                diagnolsusersecond = true;
+            }
+            else
+            {
+                diagnolsusersecond = false;
+                break;
+            }
+        }
+        diagnolsuserwin = diagnolsuserfirst ||  diagnolsusersecond;
+        return diagnolsuserwin;
+        
+    }
+    private static boolean diagnolcpuwinner(char[][]tictactoe)
+    {
+        boolean diagnolcpuwin = false;
+        boolean diagnolcpufirst = false;
+        boolean diagnolcpusecond = false;
+        for(int i = 0; i < tictactoe.length; i++)
+        {
+            if(tictactoe[i][i]=='X')
+            {
+                diagnolcpufirst = true;
+            }
+            else{
+                diagnolcpusecond = false;
+                break;
+            }
+        }
+        for(int j = 0; j < tictactoe.length; j++)
+        {
+            if(tictactoe[j][tictactoe[j].length-1-j]=='O')
+            {
+                diagnolcpufirst = true;
+            }
+            else
+            {
+                diagnolcpusecond = false;
+                break;
+            }
+        }
+        diagnolcpuwin = diagnolcpufirst || diagnolcpusecond;
+        return diagnolcpuwin;
+    }
+    
 }
