@@ -14,14 +14,23 @@ public class Tictactoe
                 tictactoe[i][j] = '*';
             }
         }
-        tictactoegame(tictactoe);
+        int currentturn = 0;
+        int maxturns = tictactoe.length * tictactoe[0].length;
+        System.out.println(tictactoegame(tictactoe, currentturn, maxturns));
+        for(int a = 0; a < tictactoe.length; a++)
+        {
+            for(int b = 0; b < tictactoe[0].length; b++)
+            {
+                System.out.print(tictactoe[a][b]+ " ");
+            }
+            System.out.println("\n");
+        }
         
     }
-    public static void tictactoegame(char[][]tictactoe)
+    public static String tictactoegame(char[][]tictactoe, int currentturn, int maxturns)
     {
+        
         Scanner scanner = new Scanner(System.in);
-        int maxturns = tictactoe.length * tictactoe[0].length;
-        int currentturn = 0;
         System.out.println("Please enter your coordinates");
         int user_coord1;
         int user_coord2;
@@ -29,7 +38,7 @@ public class Tictactoe
         user_coord1 = scanner.nextInt();
         System.out.println("Enter the second coordinate");
         user_coord2 = scanner.nextInt();
-        while(!((user_coord1 >= 0 && user_coord1 < tictactoe.length) && (user_coord2 >= 0 && user_coord2 < tictactoe[0].length)) && (tictactoe[user_coord1][user_coord2] != '*'))
+        while(!((user_coord1 >= 0 && user_coord1 < tictactoe.length) && (user_coord2 >= 0 && user_coord2 < tictactoe[0].length)) || (tictactoe[user_coord1][user_coord2] != '*'))
         {
             System.out.println("Invalid coordinates or already filled try again");
             System.out.println("Enter you first coordinate");
@@ -38,14 +47,14 @@ public class Tictactoe
             user_coord2 = scanner.nextInt();
         }
         tictactoe[user_coord1][user_coord2] = 'O';
-        currentturn +=1;
-        if(maxturns % 2 == 1)
+        currentturn+=1;
+        
+        String statement = checkwins(tictactoe, currentturn, maxturns);
+        if(statement.equals("Congratulations you win!") || statement.equals("We have a tie."))
         {
-            if(currentturn == maxturns)
-            {
-                
-            }
+            return statement;
         }
+           
         Random rand = new Random();
         System.out.println("Computer's turn");
         int computer_coord1 = rand.nextInt(3);
@@ -56,6 +65,12 @@ public class Tictactoe
             computer_coord2 = rand.nextInt(3);
         }
         tictactoe[computer_coord1][computer_coord2]='X';
+        currentturn+=1;
+        statement = checkwins(tictactoe, currentturn, maxturns);
+        if(statement.equals("You have lost! Opponent has won.")||statement.equals("We have a tie."))
+        {
+            return statement;
+        }
         for(int i = 0; i < tictactoe.length; i++)
         {
             for(int j = 0; j < tictactoe[0].length; j++)
@@ -64,11 +79,62 @@ public class Tictactoe
             }
             System.out.println("\n");
         }
+        String recString = checkwins(tictactoe, currentturn, maxturns);
+        if(recString.equals("The game is not over keep going"))
+        {
+            return tictactoegame(tictactoe, currentturn, maxturns);
+        }
+        else
+        {
+            return recString;
+        }
+        
 
     }  
-    private static boolean checkwins(char[][]tictactoe)
+    private static String checkwins(char[][]tictactoe, int currentturn, int maxturns)
     {
-        return true;
+        String tictactoestr = "";
+        boolean b1 = checkhorizontaluserwinner(tictactoe);
+        boolean b2= checkverticaluserwinner(tictactoe);
+        boolean b3 =diagnolsuserwinner(tictactoe);
+        boolean b4 = checkhorizontalCPUwinner(tictactoe);
+        boolean b5 = checkverticalCPUwinner(tictactoe);
+        boolean b6 = diagnolcpuwinner(tictactoe);
+        boolean userwins = checkhorizontaluserwinner(tictactoe) || checkverticaluserwinner(tictactoe) || diagnolsuserwinner(tictactoe);
+        boolean cpuwins = checkhorizontalCPUwinner(tictactoe) || checkverticalCPUwinner(tictactoe) || diagnolcpuwinner(tictactoe);
+        if(currentturn == maxturns)
+        {
+            if(userwins)
+            {
+                tictactoestr = "Congratulations you win!";
+            }
+            else if(cpuwins)
+            {
+                tictactoestr = "You have lost! Opponent has won.";
+            }
+            else
+            {
+                tictactoestr = "We have a tie.";
+            }
+
+        }
+        else
+        {
+            if(userwins)
+            {
+                tictactoestr = "Congratulations you win!";
+            }
+            else if(cpuwins)
+            {
+                tictactoestr = "You have lost! Opponent has won.";
+            }
+            else
+            {
+                tictactoestr = "The game is not over keep going";
+            }
+        }
+        return tictactoestr;
+        
     }
     private static boolean checkhorizontaluserwinner(char[][]tictactoe)
     {
@@ -211,15 +277,15 @@ public class Tictactoe
                 diagnolcpufirst = true;
             }
             else{
-                diagnolcpusecond = false;
+                diagnolcpufirst = false;
                 break;
             }
         }
         for(int j = 0; j < tictactoe.length; j++)
         {
-            if(tictactoe[j][tictactoe[j].length-1-j]=='O')
+            if(tictactoe[j][tictactoe[j].length-1-j]=='X')
             {
-                diagnolcpufirst = true;
+                diagnolcpusecond = true;
             }
             else
             {
